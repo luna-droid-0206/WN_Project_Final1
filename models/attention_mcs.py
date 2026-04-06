@@ -12,6 +12,18 @@ from .layers import TemporalAttentionTransformer, create_attention_mask
 from training.config import AttentionModelConfig, DataConfig
 
 
+def _dict_to_config(data, config_class):
+    """Convert a dictionary to a config object, or return as-is if already a config object."""
+    if data is None:
+        return config_class()
+    if isinstance(data, dict):
+        config = config_class()
+        for key, value in data.items():
+            setattr(config, key.upper(), value)
+        return config
+    return data  # Already a config object
+
+
 class AttentionMCSModel(nn.Module):
     """
     Wrapper class for the attention-based MCS selection model.
@@ -25,8 +37,8 @@ class AttentionMCSModel(nn.Module):
     ):
         super().__init__()
 
-        self.config = config or AttentionModelConfig()
-        self.data_config = data_config or DataConfig()
+        self.config = _dict_to_config(config, AttentionModelConfig)
+        self.data_config = _dict_to_config(data_config, DataConfig)
 
         # Input dimension: n_subcarriers * 2 (real and imaginary)
         input_dim = self.data_config.N_SUBCARRIERS * 2

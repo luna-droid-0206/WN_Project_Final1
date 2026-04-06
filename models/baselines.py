@@ -23,6 +23,18 @@ from training.config import (
 )
 
 
+def _dict_to_config(data, config_class):
+    """Convert a dictionary to a config object, or return as-is if already a config object."""
+    if data is None:
+        return config_class()
+    if isinstance(data, dict):
+        config = config_class()
+        for key, value in data.items():
+            setattr(config, key.upper(), value)
+        return config
+    return data  # Already a config object
+
+
 class DNNMCSModel(nn.Module):
     """Fully connected deep neural network with residual connections."""
     def __init__(
@@ -33,8 +45,8 @@ class DNNMCSModel(nn.Module):
     ):
         super().__init__()
 
-        self.config = config or DNNConfig()
-        self.data_config = data_config or DataConfig()
+        self.config = _dict_to_config(config, DNNConfig)
+        self.data_config = _dict_to_config(data_config, DataConfig)
 
         # Flattened input dimension
         input_dim = self.data_config.SEQ_LEN * self.data_config.N_SUBCARRIERS * 2
@@ -126,8 +138,8 @@ class CNNMCSModel(nn.Module):
     ):
         super().__init__()
 
-        self.config = config or CNNConfig()
-        self.data_config = data_config or DataConfig()
+        self.config = _dict_to_config(config, CNNConfig)
+        self.data_config = _dict_to_config(data_config, DataConfig)
 
         seq_len = self.data_config.SEQ_LEN
         n_subcarriers = self.data_config.N_SUBCARRIERS
@@ -227,8 +239,8 @@ class LSTMMCSModel(nn.Module):
     ):
         super().__init__()
 
-        self.config = config or LSTMConfig()
-        self.data_config = data_config or DataConfig()
+        self.config = _dict_to_config(config, LSTMConfig)
+        self.data_config = _dict_to_config(data_config, DataConfig)
 
         input_dim = self.data_config.N_SUBCARRIERS * 2
         hidden_size = self.config.HIDDEN_SIZE
@@ -302,9 +314,9 @@ class CNNLSTMMCSModel(nn.Module):
     ):
         super().__init__()
 
-        self.cnn_config = cnn_config or CNNConfig()
-        self.lstm_config = lstm_config or LSTMConfig()
-        self.data_config = data_config or DataConfig()
+        self.cnn_config = _dict_to_config(cnn_config, CNNConfig)
+        self.lstm_config = _dict_to_config(lstm_config, LSTMConfig)
+        self.data_config = _dict_to_config(data_config, DataConfig)
 
         n_subcarriers = self.data_config.N_SUBCARRIERS
 
