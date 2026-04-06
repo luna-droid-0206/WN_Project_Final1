@@ -1,0 +1,45 @@
+{
+  "n_samples": 100000,
+  "seq_len": 10,
+  "n_subcarriers": 72,
+  "channel_type": "rayleigh",
+  "channel_params": {
+    "doppler_hz": 100.0,
+    "delay_spread_s": 0.001
+  },
+  "snr_range_db": [
+    0.0,
+    30.0
+  ],
+  "seed": 42,
+  "n_mcs_classes": 15,
+  "split_ratio": [
+    0.8,
+    0.1,
+    0.1
+  ],
+  "splits": {
+    "train": 80000,
+    "val": 10000,
+    "test": 10000
+  },
+  "mcs_distribution": [
+    1220,
+    0,
+    0,
+    0,
+    0,
+    0,
+    6579,
+    0,
+    0,
+    16248,
+    0,
+    0,
+    0,
+    0,
+    0,
+    75953
+  ],
+  "oracle_target_ber": 0.001
+}

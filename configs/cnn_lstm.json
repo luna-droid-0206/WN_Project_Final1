@@ -1,0 +1,11 @@
+{
+  "cnn_config": {
+    "channels": [32, 64, 128],
+    "dropout": 0.2
+  },
+  "lstm_config": {
+    "hidden_size": 128,
+    "num_layers": 2,
+    "dropout": 0.2
+  }
+}

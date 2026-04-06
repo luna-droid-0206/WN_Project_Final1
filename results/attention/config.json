@@ -1,0 +1,18 @@
+{
+  "model_name": "attention",
+  "timestamp": "2026-04-06_09-41-22",
+  "data_dir": "data/",
+  "batch_size": 128,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "n_epochs": 100,
+  "patience": 10,
+  "seed": 42,
+  "config": {
+    "d_model": 128,
+    "n_heads": 4,
+    "n_layers": 2,
+    "dropout": 0.1
+  },
+  "device": "cuda"
+}
